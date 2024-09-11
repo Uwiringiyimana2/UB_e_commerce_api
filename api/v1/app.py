@@ -12,7 +12,6 @@ app.register_blueprint(app_views)
 CORS(app, resource={r"/api/v1/*": {"origins": "*"}})
 
 
-
 @app.route('/')
 def home():
     return "Hello World!"
