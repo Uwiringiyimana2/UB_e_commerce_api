@@ -3,13 +3,20 @@
 """
 from models.user import User
 from models.base import Base
+from models.product import Product
+from models.cart import Cart, CartItem
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from os import getenv
 from datetime import datetime
 
 
-classes = {"User": User}
+classes = {
+    "User": User,
+    "Product": Product,
+    "Cart": Cart,
+    "CartItem": CartItem,
+}
 
 
 class DB:

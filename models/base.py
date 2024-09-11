@@ -21,6 +21,15 @@ class Base_model():
         return "[{:s}] ({:d}) {}".format(self.__class__.__name__, self.id,
                                          self.__dict__)
 
+    def save(self):
+        """ updates the attribute 'updated_at' with the current datetime
+        """
+        from models.db import DB
+        db = DB()
+        self.updated_at = datetime.utcnow()
+        db.add(self)
+        db.save()
+
     def to_dict(self):
         """ returns a dict containing all keys/values of an instance
         """
