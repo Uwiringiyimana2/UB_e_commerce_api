@@ -17,3 +17,4 @@ class Product(Base_model, Base):
     imageURL = Column(String(250), nullable=False)
 
     cart_items = relationship("CartItem", backref="product", cascade="all, delete")
+    order_items = relationship("OrderItem", backref="product", cascade="all, delete")

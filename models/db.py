@@ -5,6 +5,7 @@ from models.user import User
 from models.base import Base
 from models.product import Product
 from models.cart import Cart, CartItem
+from models.order import Order, OrderItem
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from os import getenv
@@ -16,6 +17,8 @@ classes = {
     "Product": Product,
     "Cart": Cart,
     "CartItem": CartItem,
+    "Order": Order,
+    "OrderItem": OrderItem,
 }
 
 
@@ -82,3 +85,8 @@ class DB:
         """
         if obj is not None:
             self._session.delete(obj)
+
+    def rollback(self):
+        """ rollback db operation
+        """
+        self._session.rollback()

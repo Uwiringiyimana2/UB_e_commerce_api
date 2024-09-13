@@ -14,3 +14,4 @@ class User(Base_model, Base):
     role = Column(String(60), default='user')
 
     carts = relationship("Cart", backref="user", cascade="all, delete")
+    orders = relationship("Order", backref="user", cascade="all, delete")
