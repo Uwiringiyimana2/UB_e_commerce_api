@@ -44,7 +44,7 @@ UB E_Commerce API
 |                     | If request is missing a parameter:                    |
 |                     | `{ "error": "Missing password" }`                     |
 
-### Example   
+### EXAMPLE  
 
 ```bash
 curl -X POST http://127.0.0.1:5000/api/v1/register \
@@ -52,6 +52,37 @@ curl -X POST http://127.0.0.1:5000/api/v1/register \
               -d email="alice@gmail.com" \
               -d role="user" \
               -d password="test"
+```
+### PARAMETERS
+| **name**     | name of user                    |
+| **email**    | email of the user               |
+| **password** | password of the user            |
+| **role**     | role of the user, admin or user |
+
+### RETURNS
+
+```bash
+{
+  "User": {
+    "__class__": "User",
+    "created_at": "2024-09-16T10:25:31.150238",
+    "email": "pamela@gmail.com",
+    "id": 6,
+    "name": "Pamela",
+    "role": "user",
+    "updated_at": "2024-09-16T10:25:31.150597"
+  },
+  "message": "pamela@gmail.com registered successful"
+}
+```
+### ERRORS
+
+```bash
+{
+    "message": "Already registered!" 
+}
+```
+
 
 -> Status and error codes
 
