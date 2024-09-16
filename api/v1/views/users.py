@@ -15,7 +15,7 @@ import jwt
 db = DB()
 
 
-@app_views.route("/status", methods=["GET"], strict_slashes=False)
+@app_views.route("/", methods=["GET"], strict_slashes=False)
 def status():
     """ test status
     """
@@ -46,7 +46,10 @@ def register():
     db.add(user)
     db.save()
     msg = f"{email} registered successful"
-    return jsonify({"message": msg})
+    return jsonify({
+        "message": msg,
+        "User": user.to_dict()
+    })
 
 
 @app_views.route("/login", methods=["POST"], strict_slashes=False)
@@ -79,13 +82,12 @@ def get_all_users(current_user):
     """GET api/v1/users
     """
     if current_user.role != "admin":
-        return jsonify({"error": "Unauthorized"})
+        return jsonify({"error": "Unauthorized"}), 401
 
     all_users = db.all(User).values()
     list_users = []
     for user in all_users:
         list_users.append(user.to_dict())
-    print(list_users)
     return jsonify(list_users)
 
 

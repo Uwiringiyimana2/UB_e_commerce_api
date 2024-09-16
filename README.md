@@ -107,7 +107,7 @@ curl -X POST http://127.0.0.1:5000/api/v1/login \
 }
 ```
 
-  POST api/v1/users
+  GET api/v1/users
   --------------------
 | **DESCRIPTION**    | This endpoint allows admin to view all users           |
 |--------------------|--------------------------------------------------------|
@@ -118,14 +118,10 @@ curl -X POST http://127.0.0.1:5000/api/v1/login \
 ### EXAMPLE  
 
 ```bash
-curl -X POST http://127.0.0.1:5000/api/v1/login \
+curl -X GET http://127.0.0.1:5000/api/v1/users \
               -H "x-access-token: <token>"
 ```
-### PARAMETERS
-| **Name**     | **Description**                       |
-|--------------|---------------------------------------|
-| `email`      | Email of the user                     |
-| `password`   | Password of the user                  |
+### PARAMETERS    No parameters
 
 ### RETURNS
 
@@ -150,6 +146,72 @@ curl -X POST http://127.0.0.1:5000/api/v1/login \
     "updated_at": "2024-09-10T17:52:30.623020"
   },
 ]
+```
+### ERRORS
+
+```bash
+{
+    "error": "Unauthorized"
+}
+```
+
+  GET api/v1/users/<user_id>
+  --------------------
+| **DESCRIPTION**    | This endpoint allows admin to view all users           |
+|--------------------|--------------------------------------------------------|
+| **URL Structure**   | http://127.0.0.1:5000/api/v1/users/<user_id>                    |
+| **METHODS**         | GET                                                   |
+| **Authentication**  | token required and user should be admin               |
+
+### EXAMPLE  
+
+```bash
+curl -X GET http://127.0.0.1:5000/api/v1/users/<user_id> \
+              -H "x-access-token: <token>"
+```
+### PARAMETERS    No parameters
+
+### RETURNS
+
+```bash
+{
+  "__class__": "User",
+  "created_at": "2024-09-11T08:03:13.411425",
+  "email": "eric@me.com",
+  "id": 4,
+  "name": "Eric",
+  "role": "user",
+  "updated_at": "2024-09-11T08:03:13.411962"
+}
+```
+### ERRORS
+
+```bash
+{
+    "error": "Unauthorized"
+}
+```
+
+  GET api/v1/users/<user_id>
+  --------------------
+| **DESCRIPTION**    | This endpoint allows admin to view all users           |
+|--------------------|--------------------------------------------------------|
+| **URL Structure**   | http://127.0.0.1:5000/api/v1/users/<user_id>                    |
+| **METHODS**         | DELETE                                                   |
+| **Authentication**  | token required and user should be admin               |
+
+### EXAMPLE  
+
+```bash
+curl -X DELETE http://127.0.0.1:5000/api/v1/users/<user_id> \
+              -H "x-access-token: <token>"
+```
+### PARAMETERS    No parameters
+
+### RETURNS
+
+```bash
+{}
 ```
 ### ERRORS
 
