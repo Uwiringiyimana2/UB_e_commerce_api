@@ -24,24 +24,25 @@ UB E_Commerce API
   -----
   POST api/v1/register
   --------------------
-  | **DESCRIPTION**    | This endpoint creates a new user account in the system |
+| **DESCRIPTION**    | This endpoint creates a new user account in the system |
 |--------------------|--------------------------------------------------------|
 | **URL Structure**   | `http://127.0.0.1:5000/api/v1/register`                |
 | **Authentication**  | Not required                                           |
-| **Example**         | `curl -X POST http://127.0.0.1:5000/api/v1/register \` <br> 
-                        `-d name="Alice"`<br>
-                        `-d email="alice@gmail.com"`<br>
-                        `-d role="user"`<br>
-                        `-d password="test"`                                  |
-| **PARAMETERS**      | `-d name="Alice"`<br>
-                        `-d email="alice@gmail.com"`<br>
-                        `-d role="user"`<br>
-                        `-d password="test"`                                  |
+| **Example**         | ```bash                                               |
+|                     | curl -X POST http://127.0.0.1:5000/api/v1/register \   |
+|                     |   -d name="Alice" \                                   |
+|                     |   -d email="alice@gmail.com" \                        |
+|                     |   -d role="user" \                                    |
+|                     |   -d password="test"                                  |
+| **PARAMETERS**      | - `name="Alice"` <br>                                  |
+|                     | - `email="alice@gmail.com"` <br>                       |
+|                     | - `role="user"` <br>                                   |
+|                     | - `password="test"`                                    |
 | **RETURNS**         | `{ "message": "<email> registered successfully" }`     |
-| **ERRORS**          | If user already registered:<br>
-                        `{ "message": "Already registered!" }`<br>
-                        If request is missing a parameter:<br>
-                        `{ "error": "Missing password" }`                     |
+| **ERRORS**          | If user already registered:                            |
+|                     | `{ "message": "Already registered!" }`                |
+|                     | If request is missing a parameter:                    |
+|                     | `{ "error": "Missing password" }`                     |
 
 
 -> Status and error codes
