@@ -24,23 +24,23 @@ UB E_Commerce API
   -----
   POST api/v1/register
   --------------------
-  | **DESCRIPTION**   | This endpoint creates a new user account in the system |
-|-------------------|--------------------------------------------------------|
-| **URL Structure**  | `http://127.0.0.1:5000/api/v1/register`                |
-| **Authentication** | Not required                                           |
-| **Example**        | `curl -X POST http://127.0.0.1:5000/api/v1/register \`<br> 
+  | **DESCRIPTION**    | This endpoint creates a new user account in the system |
+|--------------------|--------------------------------------------------------|
+| **URL Structure**   | `http://127.0.0.1:5000/api/v1/register`                |
+| **Authentication**  | Not required                                           |
+| **Example**         | `curl -X POST http://127.0.0.1:5000/api/v1/register \` <br> 
                         `-d name="Alice"`<br>
                         `-d email="alice@gmail.com"`<br>
                         `-d role="user"`<br>
                         `-d password="test"`                                  |
-| **PARAMETERS**     | `-d name="Alice"`<br>
+| **PARAMETERS**      | `-d name="Alice"`<br>
                         `-d email="alice@gmail.com"`<br>
                         `-d role="user"`<br>
                         `-d password="test"`                                  |
-| **RETURNS**        | `{ "message": "<email> registered successfully" }`     |
-| **ERRORS**         | If user already registered:<br>
+| **RETURNS**         | `{ "message": "<email> registered successfully" }`     |
+| **ERRORS**          | If user already registered:<br>
                         `{ "message": "Already registered!" }`<br>
-                        If request missing parameter:<br>
+                        If request is missing a parameter:<br>
                         `{ "error": "Missing password" }`                     |
 
 
