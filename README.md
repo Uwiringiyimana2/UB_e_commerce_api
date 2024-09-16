@@ -304,3 +304,125 @@ curl -X GET http://127.0.0.1:5000/api/v1/products/<product_id>
 {
   "error": "Not found"
 }
+
+  POST api/v1/admin/products
+  --------------------------
+| **DESCRIPTION**    | This endpoint allows admin to create new product       |
+|--------------------|--------------------------------------------------------|
+| **URL Structure**   | http://127.0.0.1:5000/api/v1/admin/products    |
+| **METHODS**         | POST                                                  |
+| **Authentication**  | token required and user should be admin               |
+
+### EXAMPLE  
+
+```bash
+curl -X POST http://127.0.0.1:5000/api/v1/admin/products \
+    -H "x-access-token: <token>"
+    -F "name=candid B" \
+    -F price=15 \
+    -F description="it is used for dermal diseases" \
+    -F "inventory=12" \
+    -F category="dermatological" \
+    -F image="@./MELA_UNIFYING_ULTRA-MOISTURIZING_MILK_500ML-_new__03891.png"
+```
+### PARAMETERS
+| **Name**     | **Description**                       |
+|--------------|---------------------------------------|
+| `name`       | Name of the product                   |
+| `price`      | price of the product                  |
+| `password`   | Password of the product               |
+| `description`| description of the product            |
+| `inventory`  | stock level of the product            |
+| `category`   | category of the product               |
+| `image`      | image of the product                  |
+
+### RETURNS
+
+```bash
+{
+  "__class__": "Product",
+  "category": "dermatological",
+  "created_at": "2024-09-16T15:04:18.447297",
+  "description": "it is used for dermal diseases",
+  "id": 5,
+  "imageURL": "static/images/MELA_UNIFYING_ULTRA-MOISTURIZING_MILK_500ML-_new__03891.png",
+  "inventory": 12,
+  "name": "candid B",
+  "price": 15.0,
+  "updated_at": "2024-09-16T15:04:18.447610"
+}
+```
+### ERRORS
+{
+  "error": "Missing product's category"
+}
+
+  PUT api/v1/admin/products/<id>
+  --------------------------------
+| **DESCRIPTION**    | This endpoint allows admin to update product       |
+|--------------------|--------------------------------------------------------|
+| **URL Structure**   | http://127.0.0.1:5000/api/v1/admin/products/<id>    |
+| **METHODS**         | PUT                                                  |
+| **Authentication**  | token required and user should be admin               |
+
+### EXAMPLE  
+
+```bash
+curl -X PUT http://127.0.0.1:5000/api/v1/admin/products/6 \
+    -H 'x-access-token: <token>'
+    -d '{"price": 20, "description": "Treats UTIs"}'
+```
+### PARAMETERS
+
+```bash
+{
+    "price": 20, 
+    "description": "Treats UTIs",
+}
+```
+### RETURNS
+
+```bash
+{
+  "__class__": "Product",
+  "category": "dermatological",
+  "created_at": "2024-09-16T15:04:18.447297",
+  "description": "Treats UTIs",
+  "id": 6,
+  "imageURL": "static/images/MELA_UNIFYING_ULTRA-MOISTURIZING_MILK_500ML-_new__03891.png",
+  "inventory": 12,
+  "name": "candid B",
+  "price": 20,
+  "updated_at": "2024-09-16T15:04:18.447610"
+}
+```
+### ERRORS
+No specific error
+
+  DELETE api/v1/admin/products/<id>
+  --------------------------------
+| **DESCRIPTION**    | This endpoint allows admin to delete product       |
+|--------------------|--------------------------------------------------------|
+| **URL Structure**   | http://127.0.0.1:5000/api/v1/admin/products/<id>    |
+| **METHODS**         | DELETE                                                 |
+| **Authentication**  | token required and user should be admin               |
+
+### EXAMPLE  
+
+```bash
+curl -X DELETE http://127.0.0.1:5000/api/v1/admin/products/6 \
+    -H 'x-access-token: <token>'
+```
+### PARAMETERS
+No parameters
+### RETURNS
+
+```bash
+{}
+```
+### ERRORS
+```bash
+{
+  "error": "Not found"
+}
+```

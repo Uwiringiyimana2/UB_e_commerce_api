@@ -9,7 +9,7 @@ class Product(Base_model, Base):
     """ Product class
     """
     __tablename__ = "products"
-    name = Column(String(120), nullable=False)
+    name = Column(String(120), unique=True, nullable=False)
     price = Column(Numeric(precision=10, scale=2), nullable=False)
     description = Column(String(500), nullable=False)
     inventory = Column(Integer, nullable=False)

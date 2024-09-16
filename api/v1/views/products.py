@@ -53,15 +53,20 @@ def create_products(current_user):
         return jsonify({"error": "Missing product's name"}), 400
 
     price = request.form.get("price")
+    if not price:
+        return jsonify({"error": "Missing price"}), 400
     try:
         price = float(price)
     except ValueError:
         return jsonify({"error": "Invalid price format"}), 400
+    
     description = request.form.get("description")
     if not description:
         return jsonify({"error": "Missing product's description"}), 400
 
     inventory = request.form.get("inventory")
+    if not inventory:
+        return jsonify({"error": "Missing inventory"}), 400
     try:
         inventory = int(inventory)
     except ValueError:
@@ -84,6 +89,10 @@ def create_products(current_user):
         image.save(imageURL)
     else:
         return jsonify({"error": "Invalid file format"}), 400
+
+    product = db.get(Product, name=name)
+    if product:
+        return jsonify({"messae": "Product already exists, you may update!"})
 
     product = Product(
         name=name,
