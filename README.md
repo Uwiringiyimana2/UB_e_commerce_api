@@ -29,20 +29,6 @@ UB E_Commerce API
 | **URL Structure**   | `http://127.0.0.1:5000/api/v1/register`               |
 | **METHODS**         | POST                                                  |
 | **Authentication**  | Not required                                           |
-| **Example**         | curl -X POST http://127.0.0.1:5000/api/v1/register \   |
-|                     |   -d name="Alice" \                                   |
-|                     |   -d email="alice@gmail.com" \                        |
-|                     |   -d role="user" \                                    |
-|                     |   -d password="test"                                  |
-| **PARAMETERS**      | - `name="Alice"` <br>                                  |
-|                     | - `email="alice@gmail.com"` <br>                       |
-|                     | - `role="user"` <br>                                   |
-|                     | - `password="test"`                                    |
-| **RETURNS**         | `{ "message": "<email> registered successfully" }`     |
-| **ERRORS**          | If user already registered:                            |
-|                     | `{ "message": "Already registered!" }`                |
-|                     | If request is missing a parameter:                    |
-|                     | `{ "error": "Missing password" }`                     |
 
 ### EXAMPLE  
 
@@ -54,10 +40,12 @@ curl -X POST http://127.0.0.1:5000/api/v1/register \
               -d password="test"
 ```
 ### PARAMETERS
-| **name**     | name of user                    |
-| **email**    | email of the user               |
-| **password** | password of the user            |
-| **role**     | role of the user, admin or user |
+| **Name**     | **Description**                       |
+|--------------|---------------------------------------|
+| `name`       | Name of the user                      |
+| `email`      | Email of the user                     |
+| `password`   | Password of the user                  |
+| `role`       | Role of the user, e.g., admin or user |
 
 ### RETURNS
 
