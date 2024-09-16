@@ -7,7 +7,13 @@ from models.db import DB
 from models.product import Product
 from models.cart import Cart, CartItem
 from models.order import Order, OrderItem, PaymentStatus
-from utils import token_required, create_order, clear_cart, send_confirmation_email
+from utils import (
+    token_required,
+    create_order,
+    clear_cart,
+    send_confirmation_email,
+    decrease_product_quantity
+)
 from api.v1.config import Config
 from sqlalchemy.orm.exc import NoResultFound
 import stripe
@@ -44,16 +50,20 @@ def checkout(current_user):
             confirm=True
         )
 
-        create_order(current_user.id, cart)
-        clear_cart(cart)
-        send_confirmation_email(current_user, total_amount)
-        
+        if payment_intent.status == "succeeded":
+            create_order(current_user.id, cart)
+            decrease_product_quantity(current_user.id)
+            clear_cart(current_user.id)
+            send_confirmation_email(current_user, total_amount)
+
         return jsonify({
-            "status": "success",
+            "status": payment_intent.status,
             "payment_intent": payment_intent.id
         })
     except stripe.error.CardError as e:
         return jsonify({"error": str(e)}), 400
+    except stripe.error.APIConnectionError as e:
+        return jsonify({"error": str({e})}), 503
 
 
 @app_views.route("/orders", methods=["GET"], strict_slashes=False)
@@ -65,13 +75,14 @@ def get_orders(current_user):
     orders = current_user.orders
     if not orders:
         return jsonify({"error": "No orders found!"}), 404
-    
+
     order_history = []
     for order in orders:
         order_data = {
+            "order_id": order.id,
             "user_id": order.user_id,
             "total_amount": order.total_amount,
-            "payment_status": order.payment_status,
+            "payment_status": order.payment_status.value,
             "timestamp": order.created_at,
             "cart_items": [
                 {

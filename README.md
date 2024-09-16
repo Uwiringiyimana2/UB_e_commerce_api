@@ -353,9 +353,11 @@ curl -X POST http://127.0.0.1:5000/api/v1/admin/products \
 }
 ```
 ### ERRORS
+```bash
 {
   "error": "Missing product's category"
 }
+```
 
   PUT api/v1/admin/products/<id>
   --------------------------------
@@ -424,5 +426,237 @@ No parameters
 ```bash
 {
   "error": "Not found"
+}
+```
+
+Cart
+====
+  GET api/v1/cart
+  --------------------
+| **DESCRIPTION**    | This endpoint allows users to view their cart          |
+|--------------------|--------------------------------------------------------|
+| **URL Structure**   | http://127.0.0.1:5000/api/v1/cart                 |
+| **METHODS**         | GET                                                   |
+| **Authentication**  | Required               |
+
+### EXAMPLE  
+
+```bash
+curl -X GET http://127.0.0.1:5000/api/v1/cart \
+    -H 'x-access-token: <token>'
+```
+### PARAMETERS    
+No parameters
+
+### RETURNS
+
+```bash
+{
+  "items": [
+    {
+      "__class__": "CartItem",
+      "cart_id": 1,
+      "created_at": "2024-09-16T17:15:36.298778",
+      "id": 1,
+      "product_id": 6,
+      "quantity": 10,
+      "updated_at": "2024-09-16T17:26:01.216545"
+    }
+  ],
+  "totalPrice": "300.00"
+}
+```
+### ERRORS
+```bash
+{
+  "error": "No Cart found"
+}
+```
+
+POST api/v1/cart/add/<product_id>
+  -------------------------------
+| **DESCRIPTION**    | This endpoint allows users to view their cart          |
+|--------------------|--------------------------------------------------------|
+| **URL Structure**   | http://127.0.0.1:5000/api/v1/cart/add/<product_id>    |
+| **METHODS**         | POST                                                  |
+| **Authentication**  | Required               |
+
+### EXAMPLE  
+
+```bash
+curl -X POST http://127.0.0.1:5000/api/v1/cart/add/6 \
+    -H 'x-access-token: <token>'
+    -d quantity=10
+```
+### PARAMETERS    
+| **quantity** | quantity of the product to add to a cart |
+
+### RETURNS
+
+```bash
+{
+  "__class__": "CartItem",
+  "cart_id": 1,
+  "created_at": "2024-09-16T17:15:36.298778",
+  "id": 1,
+  "product_id": "6",
+  "quantity": 10,
+  "updated_at": "2024-09-16T17:26:01.216545"
+}
+```
+### ERRORS
+```bash
+{
+  "error": "Only 12 units are available"
+}
+```
+
+  PUT api/v1/cart/update/<product_id>
+  -------------------------------
+| **DESCRIPTION**    | This endpoint allows users to view their cart          |
+|--------------------|--------------------------------------------------------|
+| **URL Structure**   | http://127.0.0.1:5000/api/v1/cart/update/<product_id>    |
+| **METHODS**         | PUT                                                  |
+| **Authentication**  | Required               |
+
+### EXAMPLE  
+
+```bash
+curl -X PUT http://127.0.0.1:5000/api/v1/cart/update/ \
+    -H 'x-access-token: <token>'
+    -d quantity=10
+```
+### PARAMETERS    
+| **quantity** | quantity of the product to add to a cart |
+
+### RETURNS
+
+```bash
+{
+  "__class__": "CartItem",
+  "cart_id": 1,
+  "created_at": "2024-09-16T17:15:36.298778",
+  "id": 2,
+  "product_id": 4,
+  "quantity": 5,
+  "updated_at": "2024-09-16T17:35:01.848029"
+}
+```
+### ERRORS
+```bash
+{
+  "error": "Missing quantity!"
+}
+```
+
+  DELETE api/v1/cart/remove/<product_id>
+  -------------------------------
+| **DESCRIPTION**    | This endpoint allows users to view their cart          |
+|--------------------|--------------------------------------------------------|
+| **URL Structure**   | http://127.0.0.1:5000/api/v1/cart/remove/<product_id>    |
+| **METHODS**         | DELETE                                                  |
+| **Authentication**  | Required               |
+
+### EXAMPLE  
+
+```bash
+curl -X DELETE http://127.0.0.1:5000/api/v1/cart/remove/ \
+    -H 'x-access-token: <token>'
+```
+### PARAMETERS    
+No parameters
+
+### RETURNS
+
+```bash
+{}
+```
+### ERRORS
+```bash
+{
+  "error": "No product found in cart"
+}
+```
+
+Orders
+======
+  GET api/v1/orders
+  -------------------------------
+| **DESCRIPTION**    | This endpoint allows users to view their orders        |
+|--------------------|--------------------------------------------------------|
+| **URL Structure**   | http://127.0.0.1:5000/api/v1/orders                   |
+| **METHODS**         | GET                                                   |
+| **Authentication**  | Required                                              |
+
+### EXAMPLE  
+
+```bash
+curl -X GET http://127.0.0.1:5000/api/v1/orders \
+    -H 'x-access-token: <token>'
+```
+### PARAMETERS    
+No parameters
+
+### RETURNS
+
+```bash
+[
+  {
+    "cart_items": [
+      {
+        "price": "4500.00",
+        "product_id": 3,
+        "quantity": 5
+      },
+      {
+        "price": "35000.00",
+        "product_id": 4,
+        "quantity": 10
+      }
+    ],
+    "order_id": 11,
+    "payment_status": "Paid",
+    "timestamp": "Sat, 14 Sep 2024 17:32:40 GMT",
+    "total_amount": "372500.00",
+    "user_id": 3
+  }
+]
+```
+### ERRORS
+```bash
+{
+  "error": "No orders found!"
+}
+```
+
+  POST api/v1/checkout
+  --------------------
+| **DESCRIPTION**    | This endpoint allows users to pay cart items           |
+|--------------------|--------------------------------------------------------|
+| **URL Structure**   | http://127.0.0.1:5000/api/v1/checkout                 |
+| **METHODS**         | POST                                                   |
+| **Authentication**  | Required                                              |
+
+### EXAMPLE  
+
+```bash
+curl -X POST http://127.0.0.1:5000/api/v1/checkout \
+    -H 'x-access-token: <token>'
+```
+### PARAMETERS    
+| **paymentMethodId** | Payment method Id of payment method selected |
+
+### RETURNS
+
+```bash
+{
+  "payment_intent": "pi_3PzlRiHI4UNrqRh50onGnRIX",
+  "status": "succeeded"
+}
+```
+### ERRORS
+```bash
+{
+  "error": "No orders found!"
 }
 ```
