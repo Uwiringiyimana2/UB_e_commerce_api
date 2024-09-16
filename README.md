@@ -220,3 +220,87 @@ curl -X DELETE http://127.0.0.1:5000/api/v1/users/<user_id> \
     "error": "Unauthorized"
 }
 ```
+
+Products
+========
+  GET api/v1/products
+  --------------------
+| **DESCRIPTION**    | This endpoint allows users to view all products        |
+|--------------------|--------------------------------------------------------|
+| **URL Structure**   | http://127.0.0.1:5000/api/v1/products                 |
+| **METHODS**         | GET                                                   |
+| **Authentication**  | Not required               |
+
+### EXAMPLE  
+
+```bash
+curl -X GET http://127.0.0.1:5000/api/v1/products
+```
+### PARAMETERS    No parameters
+
+### RETURNS
+
+```bash
+[
+  {
+    "__class__": "Product",
+    "category": "contraceptive",
+    "created_at": "2024-09-11T12:26:11.879616",
+    "description": "emergency contraceptive",
+    "id": 1,
+    "imageURL": "static/images/zee.jpg",
+    "inventory": 15,
+    "name": "ZEE",
+    "price": "2500.00",
+    "updated_at": "2024-09-11T12:26:11.879823"
+  },
+  {
+    "__class__": "Product",
+    "category": "Antimicrobial",
+    "created_at": "2024-09-11T14:29:54.957225",
+    "description": "dermatological",
+    "id": 2,
+    "imageURL": "static/images/candiderm.png",
+    "inventory": 5,
+    "name": "candiderm",
+    "price": "2500.00",
+    "updated_at": "2024-09-11T14:29:54.957524"
+  }
+]
+```
+
+  GET api/v1/products/<product_id>
+  --------------------------------
+| **DESCRIPTION**    | This endpoint allows users to view one product         |
+|--------------------|--------------------------------------------------------|
+| **URL Structure**   | http://127.0.0.1:5000/api/v1/products/<product_id>    |
+| **METHODS**         | GET                                                   |
+| **Authentication**  | token required and user should be admin               |
+
+### EXAMPLE  
+
+```bash
+curl -X GET http://127.0.0.1:5000/api/v1/products/<product_id>
+```
+### PARAMETERS    No parameters
+
+### RETURNS
+
+```bash
+{
+  "__class__": "Product",
+  "category": "Allergy",
+  "created_at": "2024-09-11T14:29:54.957225",
+  "description": "Solves breathing discomfort",
+  "id": 3,
+  "imageURL": "static/images/akerol.jpg",
+  "inventory": 13,
+  "name": "Akerol",
+  "price": "4500.00",
+  "updated_at": "2024-09-11T14:29:54.957524"
+}
+```
+### ERRORS
+{
+  "error": "Not found"
+}
