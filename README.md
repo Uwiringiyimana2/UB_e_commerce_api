@@ -26,10 +26,10 @@ UB E_Commerce API
   --------------------
 | **DESCRIPTION**    | This endpoint creates a new user account in the system |
 |--------------------|--------------------------------------------------------|
-| **URL Structure**   | `http://127.0.0.1:5000/api/v1/register`                |
+| **URL Structure**   | `http://127.0.0.1:5000/api/v1/register`               |
+| **METHODS**         | POST                                                  |
 | **Authentication**  | Not required                                           |
-| **Example**         | ```bash                                               |
-|                     | curl -X POST http://127.0.0.1:5000/api/v1/register \   |
+| **Example**         | curl -X POST http://127.0.0.1:5000/api/v1/register \   |
 |                     |   -d name="Alice" \                                   |
 |                     |   -d email="alice@gmail.com" \                        |
 |                     |   -d role="user" \                                    |
@@ -44,6 +44,11 @@ UB E_Commerce API
 |                     | If request is missing a parameter:                    |
 |                     | `{ "error": "Missing password" }`                     |
 
+Example   curl -X POST http://127.0.0.1:5000/api/v1/register \
+              -d name="Alice" \
+              -d email="alice@gmail.com" \
+              -d role="user" \
+              -d password="test"
 
 -> Status and error codes
 
