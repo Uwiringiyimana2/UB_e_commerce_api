@@ -53,7 +53,7 @@ def add_cart_item(current_user, product_id):
         if item:
             return jsonify(item.to_dict())
     except ValueError as e:
-        return jsonify({"error": e})
+        return jsonify({"error": str(e)})
 
 
 @app_views.route("/cart/remove/<product_id>", methods=["DELETE"], strict_slashes=False)
@@ -81,6 +81,9 @@ def update_item_quantity(current_user, product_id):
     PUT api/v1/cart/update/<product_id>
     """
     quantity = request.form.get("quantity")
+    if not quantity:
+        return jsonify({"error": "Missing quantity!"})
+
     try:
         quantity = int(quantity)
     except ValueError:
