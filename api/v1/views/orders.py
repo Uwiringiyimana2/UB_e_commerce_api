@@ -12,7 +12,8 @@ from utils import (
     create_order,
     clear_cart,
     send_confirmation_email,
-    decrease_product_quantity
+    decrease_product_quantity,
+    get_page
 )
 from api.v1.config import Config
 from sqlalchemy.orm.exc import NoResultFound
@@ -93,5 +94,6 @@ def get_orders(current_user):
             ]
         }
         order_history.append(order_data)
+    order_page = get_page(order_history, 3)
 
-    return jsonify(order_history), 200
+    return jsonify(order_page), 200
