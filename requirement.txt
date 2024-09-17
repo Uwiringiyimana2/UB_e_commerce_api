@@ -1,4 +1,6 @@
-flask 3.0.3
-flask_cors
-bcrypt
+flask==3.0.3
+flask_cors==3.0.8
+bcrypt==4.2.0
+jwt==2.9.0
+requests=2.32.3
 stripe
