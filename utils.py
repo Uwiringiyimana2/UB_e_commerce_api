@@ -150,11 +150,17 @@ def create_order(user_id, cart):
     db.save()
 
 
-def clear_cart(cart):
+def clear_cart(user_id):
     """ clear cart after payment
     """
-    cart.items = []
-    db.save()
+    cart = db.get(Cart, user_id=user_id)
+    if not cart:
+        return jsonify({"error": "Not found!"})
+    if cart:
+        db.delete(cart)
+        db.save()
+        return jsonify({}), 200
+    return jsonify({"error": "No product found in cart"})
 
 
 def send_confirmation_email(current_user, total_amount):
@@ -164,10 +170,48 @@ def send_confirmation_email(current_user, total_amount):
     email_body = f"Your order for ${total_amount / 100:.2f} has been confirmed."
 
     sender = "uwiringiyimanaericmax2000@gmail.com"
-    recipient = current_user.email
+    recipient = "uwiringiyeric2000@gmail.com"
 
-    with smtplib.SMTP("smtp.example.com", 587) as server:
-        server.starttls()
-        server.login(sender, "ERICmax2000@")
-        message = f"Subject: {email_subject}\n\n{email_body}"
-        server.sendmail(sender, recipient, message)
+    try:
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.starttls()
+            server.login(sender, "ericmax2000")
+            message = f"Subject: {email_subject}\n\n{email_body}"
+            server.sendmail(sender, recipient, message)
+            print(f"Confirmation email sent to {recipient}.")
+    except Exception as e:
+        print(f"Failed to send email: {e}")
+
+
+def decrease_product_quantity(user_id):
+    """ decrease product quantity after making order
+    """
+    cart = db.get(Cart, user_id=user_id)
+    if not cart or len(cart.items) == 0:
+        return jsonify({"error": "No cart found!"})
+    
+    for item in cart.items:
+        product = db.get(Product, id=item.product_id)
+        product.inventory -= item.quantity
+    db.save()
+
+
+def index_range(page: int, page_size: int = 5):
+    """return a tuple of size two containing a start index and an end index
+    """
+    return (page - 1) * page_size, page * page_size
+
+
+def get_page(data, page: int = 1, page_size: int = 5):
+    """ get pages
+    """
+    assert isinstance(page, int)
+    assert isinstance(page_size, int)
+    assert page > 0
+    assert page_size > 0
+
+    start_idx, end_idx = index_range(page, page_size)
+    if start_idx >= len(data):
+        return []
+    
+    return data[start_idx:end_idx]
