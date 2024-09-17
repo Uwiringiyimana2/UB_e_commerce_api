@@ -70,7 +70,7 @@ def login():
         token = jwt.encode({
           "email": user.email,
           "name": user.name,
-          "exp": datetime.utcnow() + timedelta(minutes=10),
+          "exp": datetime.utcnow() + timedelta(minutes=30),
         }, Config.SECRET_KEY)
         return jsonify({"token": token})
     return jsonify({"message": "Invalid credentials!"})
@@ -136,7 +136,7 @@ def delete_user(current_user, user_id):
     """ DELETE api/v1/users/<user_id>
     """
     if current_user.role != "admin":
-        return jsonify({"error": "Unauthorized"})
+        return jsonify({"error": "Unauthorized"}), 401
 
     user = db.get(User, id=user_id)
     if not user:

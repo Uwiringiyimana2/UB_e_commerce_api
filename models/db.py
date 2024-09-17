@@ -6,8 +6,8 @@ from models.base import Base
 from models.product import Product
 from models.cart import Cart, CartItem
 from models.order import Order, OrderItem
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine, desc
+from sqlalchemy.orm import sessionmaker, scoped_session
 from os import getenv
 from datetime import datetime
 
@@ -40,8 +40,12 @@ class DB:
         """ create database session
         """
         if self.__session is None:
-            DBSession = sessionmaker(bind=self._engine)
-            self.__session = DBSession()
+            sess_factory = sessionmaker(
+                bind=self._engine,
+                expire_on_commit=False
+            )
+            DBSession = scoped_session(sess_factory)
+            self.__session = DBSession
         return self.__session
 
     def add(self, obj):
@@ -60,7 +64,7 @@ class DB:
         new_dict = {}
         for clss in classes:
             if cls is None or cls is classes[clss]:
-                objs = self._session.query(classes[clss]).all()
+                objs = self._session.query(classes[clss]).order_by(desc(classes[clss].created_at)).all()
                 for obj in objs:
                     key = obj.__class__.__name__ + "." + str(obj.id)
                     new_dict[key] = obj

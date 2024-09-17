@@ -73,6 +73,17 @@ def get_orders(current_user):
     """ Get history of user's orders
     GET api/v1/orders
     """
+    page = request.form.get("page", 1)
+    try:
+        page = int(page)
+    except ValueError:
+        return jsonify({"error": "page should be a number"})
+    page_size = request.form.get("page_size", 5)
+    try:
+        page_size = int(page_size)
+    except ValueError:
+        return jsonify({"error": "page_size should be a number"})
+
     orders = current_user.orders
     if not orders:
         return jsonify({"error": "No orders found!"}), 404
@@ -94,6 +105,6 @@ def get_orders(current_user):
             ]
         }
         order_history.append(order_data)
-    order_page = get_page(order_history, 3)
+    order_page = get_page(order_history, page, page_size)
 
     return jsonify(order_page), 200
