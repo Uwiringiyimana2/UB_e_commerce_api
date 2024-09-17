@@ -1,22 +1,24 @@
 UB E_Commerce API
 =================
--> An Outline
-  ===========
-  This backend server is an app that handles the backend and business logic of any e_commerce web application. It provides the endpoint for communicating with the server. Any company that want to develop an e_commere website can utilize this server to handle their backend storage and business logic.
+  This backend server is designed to manage the backend operations and business logic for any e-commerce web application. It provides API endpoints for seamless communication between the frontend and the server. Companies looking to develop an e-commerce website can leverage this server to handle backend storage, business logic, and essential functionalities efficiently.
 
--> Tutorials || Getting started guide
-  > install dependencies
-  > clone the repo
-  > start a server
-  > make api call
-  > The API returns request responses in JSON format. When an API request returns an error, it is sent in the JSON response as an error key.
-  > Authentication error response
-      If an API key is missing, malformed, or invalid, you will receive an HTTP 401 Unauthorized response code.
+Getting started guide
+=====================
+### Setup
 
+```
+$ pip3 install -r requirement.txt
+```
+### Clone repo
 
--> Authentication
-  > use token_based authentication, JWT(Json Web Token) authentication
-  > after logging in with your email and password, a token is generated and returned in the response body. It expires within 10 minutes after generation.
+```
+$ git clone https://github.com/Uwiringiyimana2/UB_e_commerce_api.git
+```
+### Run
+
+```
+$ python3 -m api.v1.app
+```
 
   Endpoint definition
   ===================
@@ -29,9 +31,7 @@ UB E_Commerce API
 | **URL Structure**   | `http://127.0.0.1:5000/api/v1/register`               |
 | **METHODS**         | POST                                                  |
 | **Authentication**  | Not required                                           |
-
 ### EXAMPLE  
-
 ```bash
 curl -X POST http://127.0.0.1:5000/api/v1/register \
               -d name="Alice" \
@@ -46,9 +46,7 @@ curl -X POST http://127.0.0.1:5000/api/v1/register \
 | `email`      | Email of the user                     |
 | `password`   | Password of the user                  |
 | `role`       | Role of the user, e.g., admin or user |
-
 ### RETURNS
-
 ```bash
 {
   "User": {
@@ -64,7 +62,6 @@ curl -X POST http://127.0.0.1:5000/api/v1/register \
 }
 ```
 ### ERRORS
-
 ```bash
 {
     "message": "Already registered!" 
@@ -77,10 +74,8 @@ curl -X POST http://127.0.0.1:5000/api/v1/register \
 |--------------------|--------------------------------------------------------|
 | **URL Structure**   | http://127.0.0.1:5000/api/v1/login                    |
 | **METHODS**         | POST                                                  |
-| **Authentication**  | Login credentials(email&password) required            |
-
+| **Authentication**  | Login credentials (email and password) required       |
 ### EXAMPLE  
-
 ```bash
 curl -X POST http://127.0.0.1:5000/api/v1/login \
               -d email="mukapa@gmail.com" \
@@ -91,16 +86,13 @@ curl -X POST http://127.0.0.1:5000/api/v1/login \
 |--------------|---------------------------------------|
 | `email`      | Email of the user                     |
 | `password`   | Password of the user                  |
-
 ### RETURNS
-
 ```bash
 {
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im11a2FwYUBtZS5jb20iLCJuYW1lIjoiQmVuamFtaW4iLCJleHAiOjE3MjY0ODY0ODB9.R-yTyiRn0F9KscOneqzP_V8xr-iwpw3l4OjT7cs5ibY"
 }
 ```
 ### ERRORS
-
 ```bash
 {
     "message": "Invalid credentials!"
@@ -114,17 +106,14 @@ curl -X POST http://127.0.0.1:5000/api/v1/login \
 | **URL Structure**   | http://127.0.0.1:5000/api/v1/users                    |
 | **METHODS**         | GET                                                   |
 | **Authentication**  | token required and user should be admin               |
-
 ### EXAMPLE  
-
 ```bash
 curl -X GET http://127.0.0.1:5000/api/v1/users \
               -H "x-access-token: <token>"
 ```
-### PARAMETERS    No parameters
-
+### PARAMETERS    
+No parameters
 ### RETURNS
-
 ```bash
 [
   {
@@ -148,7 +137,6 @@ curl -X GET http://127.0.0.1:5000/api/v1/users \
 ]
 ```
 ### ERRORS
-
 ```bash
 {
     "error": "Unauthorized"
@@ -157,22 +145,20 @@ curl -X GET http://127.0.0.1:5000/api/v1/users \
 
   GET api/v1/users/<user_id>
   --------------------
-| **DESCRIPTION**    | This endpoint allows admin to view all users           |
+| **DESCRIPTION**    | This endpoint allows admin to view one user            |
 |--------------------|--------------------------------------------------------|
-| **URL Structure**   | http://127.0.0.1:5000/api/v1/users/<user_id>                    |
+| **URL Structure**   | http://127.0.0.1:5000/api/v1/users/<user_id>          |
 | **METHODS**         | GET                                                   |
 | **Authentication**  | token required and user should be admin               |
 
 ### EXAMPLE  
-
 ```bash
 curl -X GET http://127.0.0.1:5000/api/v1/users/<user_id> \
               -H "x-access-token: <token>"
 ```
-### PARAMETERS    No parameters
-
+### PARAMETERS    
+No parameters
 ### RETURNS
-
 ```bash
 {
   "__class__": "User",
@@ -184,17 +170,16 @@ curl -X GET http://127.0.0.1:5000/api/v1/users/<user_id> \
   "updated_at": "2024-09-11T08:03:13.411962"
 }
 ```
-### ERRORS
-
+### ERRORSd
 ```bash
 {
     "error": "Unauthorized"
 }
 ```
 
-  GET api/v1/users/<user_id>
+  DELETE api/v1/users/<user_id>
   --------------------
-| **DESCRIPTION**    | This endpoint allows admin to view all users           |
+| **DESCRIPTION**    | This endpoint allows admin to delete specific user           |
 |--------------------|--------------------------------------------------------|
 | **URL Structure**   | http://127.0.0.1:5000/api/v1/users/<user_id>                    |
 | **METHODS**         | DELETE                                                   |
@@ -206,15 +191,13 @@ curl -X GET http://127.0.0.1:5000/api/v1/users/<user_id> \
 curl -X DELETE http://127.0.0.1:5000/api/v1/users/<user_id> \
               -H "x-access-token: <token>"
 ```
-### PARAMETERS    No parameters
-
+### PARAMETERS    
+No parameters
 ### RETURNS
-
 ```bash
 {}
 ```
 ### ERRORS
-
 ```bash
 {
     "error": "Unauthorized"
@@ -230,16 +213,13 @@ Products
 | **URL Structure**   | http://127.0.0.1:5000/api/v1/products                 |
 | **METHODS**         | GET                                                   |
 | **Authentication**  | Not required               |
-
 ### EXAMPLE  
-
 ```bash
 curl -X GET http://127.0.0.1:5000/api/v1/products
 ```
-### PARAMETERS    No parameters
-
+### PARAMETERS    
+No parameters
 ### RETURNS
-
 ```bash
 [
   {
@@ -282,10 +262,9 @@ curl -X GET http://127.0.0.1:5000/api/v1/products
 ```bash
 curl -X GET http://127.0.0.1:5000/api/v1/products/<product_id>
 ```
-### PARAMETERS    No parameters
-
+### PARAMETERS    
+No parameters
 ### RETURNS
-
 ```bash
 {
   "__class__": "Product",
@@ -301,9 +280,11 @@ curl -X GET http://127.0.0.1:5000/api/v1/products/<product_id>
 }
 ```
 ### ERRORS
+```bash
 {
   "error": "Not found"
 }
+```
 
   POST api/v1/admin/products
   --------------------------
@@ -312,9 +293,7 @@ curl -X GET http://127.0.0.1:5000/api/v1/products/<product_id>
 | **URL Structure**   | http://127.0.0.1:5000/api/v1/admin/products    |
 | **METHODS**         | POST                                                  |
 | **Authentication**  | token required and user should be admin               |
-
-### EXAMPLE  
-
+### EXAMPLE   
 ```bash
 curl -X POST http://127.0.0.1:5000/api/v1/admin/products \
     -H "x-access-token: <token>"
@@ -335,9 +314,7 @@ curl -X POST http://127.0.0.1:5000/api/v1/admin/products \
 | `inventory`  | stock level of the product            |
 | `category`   | category of the product               |
 | `image`      | image of the product                  |
-
 ### RETURNS
-
 ```bash
 {
   "__class__": "Product",
@@ -366,16 +343,13 @@ curl -X POST http://127.0.0.1:5000/api/v1/admin/products \
 | **URL Structure**   | http://127.0.0.1:5000/api/v1/admin/products/<id>    |
 | **METHODS**         | PUT                                                  |
 | **Authentication**  | token required and user should be admin               |
-
 ### EXAMPLE  
-
 ```bash
 curl -X PUT http://127.0.0.1:5000/api/v1/admin/products/6 \
     -H 'x-access-token: <token>'
     -d '{"price": 20, "description": "Treats UTIs"}'
 ```
 ### PARAMETERS
-
 ```bash
 {
     "price": 20, 
@@ -383,7 +357,6 @@ curl -X PUT http://127.0.0.1:5000/api/v1/admin/products/6 \
 }
 ```
 ### RETURNS
-
 ```bash
 {
   "__class__": "Product",
@@ -408,9 +381,7 @@ No specific error
 | **URL Structure**   | http://127.0.0.1:5000/api/v1/admin/products/<id>    |
 | **METHODS**         | DELETE                                                 |
 | **Authentication**  | token required and user should be admin               |
-
 ### EXAMPLE  
-
 ```bash
 curl -X DELETE http://127.0.0.1:5000/api/v1/admin/products/6 \
     -H 'x-access-token: <token>'
@@ -418,7 +389,6 @@ curl -X DELETE http://127.0.0.1:5000/api/v1/admin/products/6 \
 ### PARAMETERS
 No parameters
 ### RETURNS
-
 ```bash
 {}
 ```
@@ -438,18 +408,14 @@ Cart
 | **URL Structure**   | http://127.0.0.1:5000/api/v1/cart                 |
 | **METHODS**         | GET                                                   |
 | **Authentication**  | Required               |
-
 ### EXAMPLE  
-
 ```bash
 curl -X GET http://127.0.0.1:5000/api/v1/cart \
     -H 'x-access-token: <token>'
 ```
 ### PARAMETERS    
 No parameters
-
 ### RETURNS
-
 ```bash
 {
   "items": [
@@ -475,7 +441,7 @@ No parameters
 
 POST api/v1/cart/add/<product_id>
   -------------------------------
-| **DESCRIPTION**    | This endpoint allows users to view their cart          |
+| **DESCRIPTION**    | This endpoint allows users to add item to their cart   |
 |--------------------|--------------------------------------------------------|
 | **URL Structure**   | http://127.0.0.1:5000/api/v1/cart/add/<product_id>    |
 | **METHODS**         | POST                                                  |
@@ -490,9 +456,7 @@ curl -X POST http://127.0.0.1:5000/api/v1/cart/add/6 \
 ```
 ### PARAMETERS    
 | **quantity** | quantity of the product to add to a cart |
-
 ### RETURNS
-
 ```bash
 {
   "__class__": "CartItem",
@@ -513,24 +477,21 @@ curl -X POST http://127.0.0.1:5000/api/v1/cart/add/6 \
 
   PUT api/v1/cart/update/<product_id>
   -------------------------------
-| **DESCRIPTION**    | This endpoint allows users to view their cart          |
+| **DESCRIPTION**    | This endpoint allows users to update item in their cart|
 |--------------------|--------------------------------------------------------|
-| **URL Structure**   | http://127.0.0.1:5000/api/v1/cart/update/<product_id>    |
-| **METHODS**         | PUT                                                  |
-| **Authentication**  | Required               |
-
+| **URL Structure**   | http://127.0.0.1:5000/api/v1/cart/update/<product_id> |
+| **METHODS**         | PUT                                                   |
+| **Authentication**  | Required                                              |
 ### EXAMPLE  
-
 ```bash
-curl -X PUT http://127.0.0.1:5000/api/v1/cart/update/ \
+curl -X PUT http://127.0.0.1:5000/api/v1/cart/update/4 \
     -H 'x-access-token: <token>'
     -d quantity=10
 ```
 ### PARAMETERS    
-| **quantity** | quantity of the product to add to a cart |
-
+| **quantity** | `quantity of the product to add to a cart` |
+-----------------------------------------------------------
 ### RETURNS
-
 ```bash
 {
   "__class__": "CartItem",
@@ -556,18 +517,14 @@ curl -X PUT http://127.0.0.1:5000/api/v1/cart/update/ \
 | **URL Structure**   | http://127.0.0.1:5000/api/v1/cart/remove/<product_id>    |
 | **METHODS**         | DELETE                                                  |
 | **Authentication**  | Required               |
-
 ### EXAMPLE  
-
 ```bash
 curl -X DELETE http://127.0.0.1:5000/api/v1/cart/remove/ \
     -H 'x-access-token: <token>'
 ```
 ### PARAMETERS    
 No parameters
-
 ### RETURNS
-
 ```bash
 {}
 ```
@@ -587,18 +544,14 @@ Orders
 | **URL Structure**   | http://127.0.0.1:5000/api/v1/orders                   |
 | **METHODS**         | GET                                                   |
 | **Authentication**  | Required                                              |
-
 ### EXAMPLE  
-
 ```bash
 curl -X GET http://127.0.0.1:5000/api/v1/orders \
     -H 'x-access-token: <token>'
 ```
 ### PARAMETERS    
 No parameters
-
 ### RETURNS
-
 ```bash
 [
   {
@@ -634,20 +587,17 @@ No parameters
 | **DESCRIPTION**    | This endpoint allows users to pay cart items           |
 |--------------------|--------------------------------------------------------|
 | **URL Structure**   | http://127.0.0.1:5000/api/v1/checkout                 |
-| **METHODS**         | POST                                                   |
+| **METHODS**         | POST                                                  |
 | **Authentication**  | Required                                              |
-
 ### EXAMPLE  
-
 ```bash
 curl -X POST http://127.0.0.1:5000/api/v1/checkout \
     -H 'x-access-token: <token>'
 ```
 ### PARAMETERS    
-| **paymentMethodId** | Payment method Id of payment method selected |
-
+| **paymentMethodId** |  `Payment method Id of payment method selected` |
+-------------------------------------------------------------------------
 ### RETURNS
-
 ```bash
 {
   "payment_intent": "pi_3PzlRiHI4UNrqRh50onGnRIX",
