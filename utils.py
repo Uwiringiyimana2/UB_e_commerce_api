@@ -14,6 +14,7 @@ from models.order import Order, OrderItem, PaymentStatus
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.exc import NoResultFound
 import smtplib
+import os
 
 
 db = DB()
@@ -170,15 +171,17 @@ def send_confirmation_email(current_user, total_amount):
     email_body = f"Your order for ${total_amount / 100:.2f} has been confirmed."
 
     sender = "uwiringiyimanaericmax2000@gmail.com"
-    recipient = "uwiringiyeric2000@gmail.com"
+    recipient = current_user.email
+    #app_password = os.getenv("APP_PASSWORD")
+    app_password = "jbbhanfjzwjldsyz"
 
     try:
         with smtplib.SMTP("smtp.gmail.com", 587) as server:
             server.starttls()
-            server.login(sender, "ericmax2000")
+            server.login(sender, app_password)
             message = f"Subject: {email_subject}\n\n{email_body}"
             server.sendmail(sender, recipient, message)
-            print(f"Confirmation email sent to {recipient}.")
+            print(f"Confirmation email sent to {recipient}")
     except Exception as e:
         print(f"Failed to send email: {e}")
 

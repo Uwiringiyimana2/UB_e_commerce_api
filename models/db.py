@@ -28,12 +28,12 @@ class DB:
     def __init__(self):
         """ Initializes properties
         """
-        self._engine = create_engine("sqlite:///a.db", echo=False)
-        Base.metadata.create_all(self._engine)
-        self.__session = None
-
+        self._engine = create_engine("mysql+mysqldb://ub_dev:ub_pwd@localhost/ub_db")
         if getenv('UB_ENV') == "test":
             Base.metadata.drop_all(self._engine)
+
+        Base.metadata.create_all(self._engine)
+        self.__session = None
 
     @property
     def _session(self):
