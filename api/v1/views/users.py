@@ -66,7 +66,7 @@ def login():
     user = db.get(User, email=email)
     if not user:
         return jsonify({"error": "user not found!"}), 404
-    if bcrypt.checkpw(password.encode("utf-8"), user.password):
+    if bcrypt.checkpw(password.encode("utf-8"), user.password.encode("utf-8")):
         token = jwt.encode({
           "email": user.email,
           "name": user.name,
