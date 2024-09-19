@@ -27,13 +27,13 @@ def register():
     """ POST api/v1/register
     """
     email = request.form.get("email")
-    if email is None:
+    if (email is None or len(email) <= 5 or '@' not in email):
         return jsonify({"error": "Missing email"}), 401
     password = request.form.get("password")
-    if password is None:
+    if password is None or len(password) <= 4:
         return jsonify({"error": "Missing password"}), 401
     name = request.form.get("name")
-    if name is None:
+    if name is None or isinstance(name, str):
         return jsonify({"error": "Missing name"}), 401
     role = request.form.get("role", None)
 
@@ -66,7 +66,7 @@ def login():
     user = db.get(User, email=email)
     if not user:
         return jsonify({"error": "user not found!"}), 404
-    if bcrypt.checkpw(password.encode("utf-8"), user.password):
+    if bcrypt.checkpw(password.encode("utf-8"), user.password.encode("utf-8")):
         token = jwt.encode({
           "email": user.email,
           "name": user.name,
