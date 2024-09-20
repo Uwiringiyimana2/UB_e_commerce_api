@@ -35,7 +35,7 @@ def register():
     elif len(password) <= 4:
         return jsonify({"error": "Password must have at least 4 characters"}), 401
     name = request.form.get("name")
-    if name is None or isinstance(name, str):
+    if name is None or not isinstance(name, str):
         return jsonify({"error": "Missing name"}), 401
     role = request.form.get("role", None)
 
