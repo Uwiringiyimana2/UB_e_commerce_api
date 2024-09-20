@@ -98,7 +98,10 @@ def get_all_users(current_user):
 def get_one_user(current_user, user_id):
     """GET api/v1/users/<user_id>
     """
-    if current_user.role != "admin" or user.id != current_user.id:
+    user = db.get(User, id=user_id)
+    if not user:
+        return jsonify({"error": "Not found"}), 404
+    if current_user.role != "admin" and user.id != current_user.id:
         return jsonify({"error": "Unauthorized"})
 
     user = db.get(User, id=user_id)
