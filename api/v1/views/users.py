@@ -28,10 +28,12 @@ def register():
     """
     email = request.form.get("email")
     if (email is None or len(email) <= 5 or '@' not in email):
-        return jsonify({"error": "Missing email"}), 401
+        return jsonify({"error": "Missing email or not valid"}), 401
     password = request.form.get("password")
-    if password is None or len(password) <= 4:
+    if password is None:
         return jsonify({"error": "Missing password"}), 401
+    elif len(password) <= 4:
+        return jsonify({"error": "Password must have at least 4 characters"}), 401
     name = request.form.get("name")
     if name is None or isinstance(name, str):
         return jsonify({"error": "Missing name"}), 401
