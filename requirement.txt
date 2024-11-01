@@ -5,3 +5,4 @@ jwt==2.9.0
 requests=2.32.3
 mysqlclient==2.2.4
 stripe
+gunicorn
